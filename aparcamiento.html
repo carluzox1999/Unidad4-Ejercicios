@@ -12,33 +12,57 @@
 
         function calcularPrecio(){
             // Obtener la fecha y hora de entrada del usuario
-            let fechaEntrada = document.getElementById("fechaEntrada").value;
-            // Comprobar que el formato de la fecha es correcto
-            if(!fechaEntrada.match(/^\d{2}\/\d{2}\/\d{4}-\d{2}:\d{2}$/)){
+            let fechaEntradaFormat = document.getElementById("fechaEntrada").value;
+            if(!fechaEntradaFormat.match(/^\d{2}\/\d{2}\/\d{4}-\d{2}:\d{2}$/)){
                 alert("Formato de fecha incorrecto. Ejemplo: dd/mm/aaaa-hh:mm");
-                return;
+                
+            } else{
+                let fechaEntrada = new Date(fechaEntradaFormat);
             }
+            // Comprobar que el formato de la fecha es correcto
+            
+
             // Mostrar la fecha y hora actual
             let fechaActual = new Date();
-            var fechaFormateada = fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear() + '-' + fechaActual.getHours() + ':' + fechaActual.getMinutes();
-
+            let fechaFormateada = fechaActual.getDate() + '/' + (fechaActual.getMonth() + 1) + '/' + fechaActual.getFullYear() + '-' + fechaActual.getHours() + ':' + fechaActual.getMinutes();
             document.getElementById("fechaActual").innerHTML = fechaFormateada;
+            if(!fechaFormateada.match(/^\d{2}\/\d{2}\/\d{4}-\d{2}:\d{2}$/)){
+                alert("Formato de fecha incorrecto. Ejemplo: dd/mm/aaaa-hh:mm");
+                
+            } else{
+                let fechaActualA = new Date(fechaFormateada);
+                console.log(fechaActualA);
+            }
+            
+
+            // let milisFechaEntrada = fechaEntrada.getTime();
+            // let milisFechaActual = fechaActualA.getTime();
+            // console.log(typeof(milisFechaActual));
             // Calcular el precio de la estancia
             let precio = 0;
-            let tiempoEstancia = fechaFormateada - fechaEntrada;
-            let horasEstancia = tiempoEstancia / 1000 / 60 / 60;
-            // console.log(tiempoEstancia);
-            if (horasEstancia < 1) {
-                precio = 1.2;
-                document.getElementById("precioEstancia").innerHTML = precio;
-            } else {
-                precio = 1.2 + (horasEstancia - 1) * 1.5;
-                document.getElementById("precioEstancia").innerHTML = precio;
-                if (precio > 20) {
-                    precio = 20;
+            let tiempoEstancia = fechaEntrada - fechaActualA;
+            // console.log(typeof(fechaActualA));
+            // console.log(fechaActualA);
+
+            if(isNaN(tiempoEstancia)){
+                document.getElementById("precioEstancia").innerHTML = 'El precio va a salir nan';
+            } else{
+                let horasEstancia = tiempoEstancia / 1000 / 60 / 60;
+                // console.log(tiempoEstancia);
+                if (horasEstancia < 1) {
+                    precio = 1.2;
                     document.getElementById("precioEstancia").innerHTML = precio;
+                } else {
+                    precio = 1.2 + (horasEstancia - 1) * 1.5;
+                    document.getElementById("precioEstancia").innerHTML = precio;
+                    if (precio > 20) {
+                        precio = 20;
+                        document.getElementById("precioEstancia").innerHTML = precio;
+                    }
                 }
             }
+            
+           
         }
     </script>
 
