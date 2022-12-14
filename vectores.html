@@ -37,7 +37,7 @@
 
             let arrayElementos = elementos.split(' ');
             
-            let desordenado = arrayElementos.sort(function(){return 0.5 - Math.random()});
+            let desordenado = arrayElementos.reverse();
             
             document.getElementById('textarea').value = desordenado.join(' ');
         }
